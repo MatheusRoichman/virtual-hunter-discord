@@ -1,21 +1,29 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+import { Client, Intents } from "discord.js";
+import { hasPrefix, getCommand } from "./utils/index.js";
+import { executeCommand } from "./commands/index.js";
 
-const { Client, Intents }=require("discord.js");
+dotenv.config();
 
 const client = new Client({
-    intents:[
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES
-    ]
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-client.once("ready", () =>{
-    console.log("BOT IS ONLINE");
-})
+client.once("ready", () => {
+  console.log("BOT IS ONLINE");
+});
 
-client.on('message', message => {
-    if(message.content.toLocaleLowerCase()==='ping') 
-    message.channel.send('pong' + ' '  + message.author.username);
-})
+client.on("messageCreate", (message) => {
+  if (message.author.bot) return;
+  if (!hasPrefix(message.content)) return;
+
+  const command = getCommand(message.content.toLocaleLowerCase());
+
+  try {
+    return executeCommand(command, message);
+  } catch (error) {
+    message.reply(error.message);
+  }
+});
 
 client.login(process.env.TOKEN);
