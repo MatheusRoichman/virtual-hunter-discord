@@ -1,0 +1,16 @@
+{
+  "name": "virtual-hunter-discord",
+  "version": "1.0.0",
+  "description": "Virtual Hunter bot for Discord.",
+  "main": "src/index.js",
+  "repository": "https://github.com/MatheusRoichman/virtual-hunter-discord",
+  "author": "Matheus Lima Roichman",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.8.1",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
+}
